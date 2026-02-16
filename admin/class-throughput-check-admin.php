@@ -108,7 +108,7 @@ class Throughput_Check_Admin {
 	 * @return   void
 	 */
 	public function throughput_check_display_admin_page() {
-		$snapshot = $this->get_environment_snapshot();
+		$throughput_check_snapshot = $this->get_environment_snapshot();
 		require plugin_dir_path( __DIR__ ) . 'admin/partials/throughput-check-admin-display.php';
 	}
 	/**

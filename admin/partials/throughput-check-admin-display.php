@@ -8,8 +8,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( ! isset( $snapshot ) || ! is_array( $snapshot ) ) {
-	$snapshot = array();
+if ( ! isset( $throughput_check_snapshot ) || ! is_array( $throughput_check_snapshot ) ) {
+	$throughput_check_snapshot = array();
 }
 ?>
 
@@ -44,10 +44,10 @@ if ( ! isset( $snapshot ) || ! is_array( $snapshot ) ) {
 	<div class="tc-card__body">
 		<table class="widefat striped tc-table--env">
 		<tbody>
-		<?php foreach ( $snapshot as $label => $value ) : ?>
+		<?php foreach ( $throughput_check_snapshot as $throughput_check_label => $throughput_check_value ) : ?>
 			<tr>
-			<th><?php echo esc_html( $label ); ?></th>
-			<td><?php echo esc_html( $value ); ?></td>
+			<th><?php echo esc_html( $throughput_check_label ); ?></th>
+			<td><?php echo esc_html( $throughput_check_value ); ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
