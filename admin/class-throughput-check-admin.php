@@ -355,7 +355,7 @@ class Throughput_Check_Admin {
 	private function license_admin_redirect_with_notice( $status ) {
 		$url = add_query_arg(
 			array(
-				'page'                                   => 'throughput-check-license',
+				'page'                            => 'throughput-check-license',
 				'throughput_check_license_notice' => $status,
 			),
 			admin_url( 'admin.php' )
@@ -395,13 +395,13 @@ class Throughput_Check_Admin {
 		$server_software = isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '';
 
 		return array(
-			'PHP'          => $php_version ? $php_version : '—',
-			'Memory limit' => ini_get( 'memory_limit' ) ? (string) ini_get( 'memory_limit' ) : '—',
-			'Max exec'     => ini_get( 'max_execution_time' ) ? (string) ini_get( 'max_execution_time' ) . 's' : '—',
-			'WP_DEBUG'     => defined( 'WP_DEBUG' ) && WP_DEBUG ? 'On' : 'Off',
-			'Object cache' => wp_using_ext_object_cache() ? 'Yes' : 'No',
-			'MySQL'        => $mysql_ver ? $mysql_ver : '—',
-			'Server'       => $server_software ? $server_software : '—',
+			'PHP'            => $php_version ? $php_version : '—',
+			'Memory limit'   => ini_get( 'memory_limit' ) ? (string) ini_get( 'memory_limit' ) : '—',
+			'Max exec'       => ini_get( 'max_execution_time' ) ? (string) ini_get( 'max_execution_time' ) . 's' : '—',
+			'WP_DEBUG'       => defined( 'WP_DEBUG' ) && WP_DEBUG ? 'On' : 'Off',
+			'Object cache'   => wp_using_ext_object_cache() ? 'Yes' : 'No',
+			'MySQL'          => $mysql_ver ? $mysql_ver : '—',
+			'Server'         => $server_software ? $server_software : '—',
 			'Active plugins' => (string) count( array_unique( $active_plugins ) ),
 		);
 	}
@@ -454,28 +454,28 @@ class Throughput_Check_Admin {
 				'url'     => $url,
 				'headers' => array( 'Cache-Control' => 'no-cache' ),
 				'options' => array(
-					'timeout'      => $timeout,
-					'verify'       => false,
+					'timeout'          => $timeout,
+					'verify'           => false,
 					'follow_redirects' => false,
 				),
 			);
 		}
 
-		$t0 = microtime( true );
+		$t0        = microtime( true );
 		$responses = Requests::request_multiple( $requests );
 		$server_ms = array();
 		$errors    = 0;
-		$t1 = microtime( true );
+		$t1        = microtime( true );
 
 		foreach ( $responses as $r ) {
 			if ( $r instanceof Requests_Exception ) {
-				$errors++;
+				++$errors;
 				continue;
 			}
 
 			$code = (int) $r->status_code;
 			if ( $code < 200 || $code >= 300 ) {
-				$errors++;
+				++$errors;
 				continue;
 			}
 
@@ -498,10 +498,9 @@ class Throughput_Check_Admin {
 			$server_p95 = $server_ms[ (int) floor( 0.95 * ( $n - 1 ) ) ];
 		}
 
-
-		$batch_sec     = max( 0.0001, ( $t1 - $t0 ) );                
-		$client_avg_ms = round( ( $batch_sec / $concurrency ) * 1000, 2 ); 
-		$estimated_rps = round( $concurrency / $batch_sec, 2 ); 
+		$batch_sec     = max( 0.0001, ( $t1 - $t0 ) );
+		$client_avg_ms = round( ( $batch_sec / $concurrency ) * 1000, 2 );
+		$estimated_rps = round( $concurrency / $batch_sec, 2 );
 
 		$stability = 'Slow';
 		if ( $errors > 0 ) {
@@ -523,22 +522,20 @@ class Throughput_Check_Admin {
 
 		wp_send_json_success(
 			array(
-				'stage'         => $stage,
-				'concurrency'   => $concurrency,
-				'client_avg_ms' => $client_avg_ms,
-				'batch_sec'     => round( $batch_sec, 2 ),
-				'estimated_rps' => $estimated_rps,
-				'errors'        => $errors,
-				'stability'     => $stability,
-				'url_used'      => $url,
-				'server_p50_ms' => round( $server_p50, 2 ),
-				'server_p95_ms' => round( $server_p95, 2 ),
-				'server_samples'=> $n,
-				'grade'         => $grade,
+				'stage'          => $stage,
+				'concurrency'    => $concurrency,
+				'client_avg_ms'  => $client_avg_ms,
+				'batch_sec'      => round( $batch_sec, 2 ),
+				'estimated_rps'  => $estimated_rps,
+				'errors'         => $errors,
+				'stability'      => $stability,
+				'url_used'       => $url,
+				'server_p50_ms'  => round( $server_p50, 2 ),
+				'server_p95_ms'  => round( $server_p95, 2 ),
+				'server_samples' => $n,
+				'grade'          => $grade,
 			)
 		);
-
-
 	}
 
 	/**
@@ -555,7 +552,6 @@ class Throughput_Check_Admin {
 			return rtrim( THROUGHPUT_CHECK_LOOPBACK_BASE, '/' ) . $path;
 		}
 
-		// 2) Default: use home_url.
 		$home = home_url( '/' );
 		$u    = wp_parse_url( $home );
 
@@ -572,6 +568,4 @@ class Throughput_Check_Admin {
 
 		return $scheme . '://' . $host . $path;
 	}
-
-
 }
