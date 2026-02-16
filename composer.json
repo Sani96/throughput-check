@@ -1,0 +1,18 @@
+{
+    "name": "fulmine/league-standings",
+    "authors": [
+        {
+            "name": "federicos-autobro",
+            "email": "146841436+federicos-autobro@users.noreply.github.com"
+        }
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.13",
+        "wp-coding-standards/wpcs": "^3.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
