@@ -64,4 +64,7 @@ if ( ! isset( $snapshot ) || ! is_array( $snapshot ) ) {
 		<p style="margin:0;"><?php echo esc_html__( 'Results will appear here.', 'throughput-check' ); ?></p>
 	</div>
 	</div>
+	<?php if ( ! defined( 'THROUGHPUT_CHECK_IS_LICENSE_ACTIVE' ) || ! THROUGHPUT_CHECK_IS_LICENSE_ACTIVE ) : ?>
+        <?php include_once plugin_dir_path( dirname( __FILE__ ) ) . 'partials/throughput-check-footer-bar.php'; ?>
+    <?php endif; ?>
 </div>

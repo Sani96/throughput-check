@@ -123,6 +123,30 @@
 .tc-copy{ white-space:nowrap; }
 .tc-pill--stage{ font-weight:600; }
 
+
+.wpsani-footer-bar {
+    margin: 20px auto 40px auto;
+    padding: 15px 20px;
+    background: #f1f1f1;
+    border-left: 4px solid #6E59A5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.wpsani-footer-bar a {
+    color: #6E59A5;
+    text-decoration: none;
+    font-weight: 600;
+}
+.wpsani-footer-bar a:hover {
+    text-decoration: none;
+}
+
+
 @media (max-width: 1120px){
 	.tc-kpis{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.tc-hero{ flex-direction:column; }
